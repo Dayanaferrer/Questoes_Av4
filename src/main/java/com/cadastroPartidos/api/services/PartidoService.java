@@ -13,6 +13,7 @@ import com.cadastroPartidos.api.entites.Partido;
 import com.cadastroPartidos.api.entites.enums.Ideologia;
 import com.cadastroPartidos.api.repositories.PartidoRepository;
 import com.cadastroPartidos.api.services.exceptions.DeletePartidoException;
+import com.cadastroPartidos.api.services.exceptions.EntityNotFoundException;
 import com.cadastroPartidos.api.services.exceptions.MethodArgumentNotValidException;
 
 @Service
@@ -74,5 +75,10 @@ public class PartidoService {
 		} else {
 			throw new DeletePartidoException("Atenção partido contém associados!!! Para deletar desvincule do partido primeiro.");
 		}
+	}
+	
+	private Partido findByPartido(Long id) {
+		Partido partido = partidoRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("ID " + id + " não Localizado."));
+		return partido;
 	}
 }
