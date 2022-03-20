@@ -1,13 +1,18 @@
 package com.cadastroPartidos.api.entites;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 public class Associado implements Serializable{
@@ -16,16 +21,25 @@ public class Associado implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	 private Long id;
+	
 	 private String nome;
+	 
 	 private String cargoPolitico;
-	 private Date dataDeNascimento;
+	 
+	 @JsonFormat(pattern = "dd/MM/yyyy")
+	 private LocalDate dataDeNascimento;
+	 
 	 private String sexo;
+	 
+	 @Transient
+	 private Set<Partido> partidos = new HashSet<>();
+	 
 	 
 	 public Associado () {
 		 
 	 }
-
-	public Associado(Long id, String nome, String cargoPolitico, Date dataDeNascimento, String sexo) {
+	 
+	public Associado(Long id, String nome, String cargoPolitico, LocalDate dataDeNascimento, String sexo) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -33,6 +47,7 @@ public class Associado implements Serializable{
 		this.dataDeNascimento = dataDeNascimento;
 		this.sexo = sexo;
 	}
+
 
 	public Long getId() {
 		return id;
@@ -58,11 +73,11 @@ public class Associado implements Serializable{
 		this.cargoPolitico = cargoPolitico;
 	}
 
-	public Date getDataDeNascimento() {
+	public LocalDate getDataDeNascimento() {
 		return dataDeNascimento;
 	}
 
-	public void setDataDeNascimento(Date dataDeNascimento) {
+	public void setDataDeNascimento(LocalDate dataDeNascimento) {
 		this.dataDeNascimento = dataDeNascimento;
 	}
 
@@ -73,6 +88,10 @@ public class Associado implements Serializable{
 	public void setSexo(String sexo) {
 		this.sexo = sexo;
 	}
+	public Set<Partido> getPartido(){
+		return partidos;
+	}
+	 
 
 	@Override
 	public int hashCode() {
@@ -90,5 +109,5 @@ public class Associado implements Serializable{
 		Associado other = (Associado) obj;
 		return Objects.equals(cargoPolitico, other.cargoPolitico) && Objects.equals(id, other.id);
 	}
-	 
+
 }
