@@ -9,6 +9,7 @@ import com.cadastroPartidos.api.entites.Partido;
 import com.cadastroPartidos.api.entites.enums.Ideologia;
 
 public interface PartidoRepository extends JpaRepository<Partido, Long>{
+	
 	List<PartidoDto> findByIdeologia(Ideologia ideologia);
 
 }

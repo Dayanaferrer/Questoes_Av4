@@ -2,7 +2,11 @@ package com.cadastroPartidos.api.controller.dto;
 
 import java.time.LocalDate;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+
 import com.cadastroPartidos.api.entites.Partido;
+import com.cadastroPartidos.api.entites.enums.Ideologia;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class PartidoDto {
@@ -13,20 +17,20 @@ public class PartidoDto {
 		
 	private String sigla;	
 	
-	private String ideologia;
+	 @Enumerated(EnumType.STRING)
+	private Ideologia ideologia;
 	
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate dataDeFundacao;
 	
 	public PartidoDto() {}
 
-	public PartidoDto(Long id, String nomeDoPartido, String sigla, String ideologia, LocalDate dataDeFundacao) {
-		super();
-		this.id = id;
-		this.nomeDoPartido = nomeDoPartido;
-		this.sigla = sigla;
-		this.ideologia = ideologia;
-		this.dataDeFundacao = dataDeFundacao;
+	public PartidoDto(Partido partido) {
+		this.id = partido.getId();
+		this.nomeDoPartido = partido.getNomeDoPartido();
+		this.sigla = partido.getSigla();
+		this.ideologia = partido.getIdeologia();
+		this.dataDeFundacao = partido.getDataDeFundacao();
 	}
 
 	public Long getId() {
@@ -53,11 +57,11 @@ public class PartidoDto {
 		this.sigla = sigla;
 	}
 
-	public String getIdeologia() {
+	public Ideologia getIdeologia() {
 		return ideologia;
 	}
 
-	public void setIdeologia(String ideologia) {
+	public void setIdeologia(Ideologia ideologia) {
 		this.ideologia = ideologia;
 	}
 
@@ -68,6 +72,7 @@ public class PartidoDto {
 	public void setDataDeFundacao(LocalDate dataDeFundacao) {
 		this.dataDeFundacao = dataDeFundacao;
 	}
+
 
 }
 

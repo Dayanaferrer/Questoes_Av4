@@ -3,13 +3,14 @@ package com.cadastroPartidos.api.controller.dto;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 
+import com.cadastroPartidos.api.entites.Associado;
+import com.cadastroPartidos.api.entites.Partido;
 import com.cadastroPartidos.api.entites.enums.CargoPolitico;
 
 public class AssociadoComPartidoDto {
 
-private Integer id;
-	
-	
+	private Long id;
+		
 	private String nome;
 	
 	@Enumerated(EnumType.STRING)
@@ -19,19 +20,18 @@ private Integer id;
 	
 	public AssociadoComPartidoDto() {}
 
-	public AssociadoComPartidoDto(Integer id, String nome, CargoPolitico cargoPolitico, String nomePartido) {
-		super();
-		this.id = id;
-		this.nome = nome;
-		this.cargoPolitico = cargoPolitico;
-		this.nomePartido = nomePartido;
+	public AssociadoComPartidoDto(Associado associado, Partido partido) {
+		this.setId(associado.getId());
+		this.setNome(associado.getNome());
+		this.setCargoPolitico(associado.getCargoPolitico());
+		this.setNomePartido(partido.getNomeDoPartido());
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -58,6 +58,8 @@ private Integer id;
 	public void setNomePartido(String nomePartido) {
 		this.nomePartido = nomePartido;
 	}
+
+
 	
 
 }

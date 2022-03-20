@@ -2,16 +2,21 @@ package com.cadastroPartidos.api.entites;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.MapsId;
-import javax.persistence.OneToOne;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 
-import com.cadastroPartidos.api.controller.dto.AssociadoComPartidoDto;
+import com.cadastroPartidos.api.controller.dto.PartidoDto;
+import com.cadastroPartidos.api.entites.enums.Ideologia;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
@@ -22,98 +27,95 @@ public class Partido  implements Serializable{
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
-	private String nome;
+	private String nomeDoPartido;
+	
 	private String sigla;
-	private String ideologia;
+	
+	@Enumerated(EnumType.STRING)
+	private Ideologia ideologia;
 	
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate dataDeFundacao;
 	
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "tb_idPartido")
+	private List<Associado> associados = new ArrayList<Associado>();
 	
 	public Partido() {}
 
-
-	public Partido(Long id, String nome, String sigla, String ideologia, LocalDate dataDeFundacao) {
-		super();
-		this.id = id;
-		this.nome = nome;
-		this.sigla = sigla;
-		this.ideologia = ideologia;
-		this.dataDeFundacao = dataDeFundacao;
+	public Partido(PartidoDto partidoDto) {
+		this.id = partidoDto.getId();
+		this.nomeDoPartido = partidoDto.getNomeDoPartido();
+		this.sigla = partidoDto.getSigla();
+		this.ideologia = partidoDto.getIdeologia();
+		this.dataDeFundacao = partidoDto.getDataDeFundacao();
 	}
-
 
 	public Long getId() {
 		return id;
 	}
 
-
 	public void setId(Long id) {
 		this.id = id;
 	}
 
-
-	public String getNome() {
-		return nome;
+	public String getNomeDoPartido() {
+		return nomeDoPartido;
 	}
 
-
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setNomeDoPartido(String nomeDoPartido) {
+		this.nomeDoPartido = nomeDoPartido;
 	}
-
 
 	public String getSigla() {
 		return sigla;
 	}
 
-
 	public void setSigla(String sigla) {
 		this.sigla = sigla;
 	}
 
-
-	public String getIdeologia() {
+	public Ideologia getIdeologia() {
 		return ideologia;
 	}
 
-
-	public void setIdeologia(String ideologia) {
+	public void setIdeologia(Ideologia ideologia) {
 		this.ideologia = ideologia;
 	}
-
 
 	public LocalDate getDataDeFundacao() {
 		return dataDeFundacao;
 	}
 
-
 	public void setDataDeFundacao(LocalDate dataDeFundacao) {
 		this.dataDeFundacao = dataDeFundacao;
 	}
+
+	public List<Associado> getAssociado() {
+		return associados;
+	}
+
+	public void setAssociados(List<Associado> associados) {
+		this.associados = associados;
+	}
+	public List<Associado> getAssociados() {
+		return associados;
+	}
+	public void addAssociado(Associado associado) {
+		associados.add(associado);
+	}
+	public void removeAssociado(Associado associado) {
+		associados.remove(associado);
+	}
 	
-	public AssociadoComPartidoDto converter(Associado associado, Partido partido) {
-		return new AssociadoComPartidoDto(associado, partido);
+	public boolean procurarAssociado(Associado associado) {
+		return associados.contains(associado);
+	}
+	
+	public PartidoDto converter(Partido partido) {
+		return new PartidoDto(partido);
 	}
 
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(id);
-	}
-
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Partido other = (Partido) obj;
-		return Objects.equals(id, other.id);
-	}
 
 }
 

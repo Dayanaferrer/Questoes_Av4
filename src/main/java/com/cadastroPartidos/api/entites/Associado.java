@@ -1,47 +1,33 @@
 package com.cadastroPartidos.api.entites;
 
-import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Objects;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 
+import com.cadastroPartidos.api.controller.dto.AssociadoComPartidoDto;
+import com.cadastroPartidos.api.entites.enums.CargoPolitico;
+import com.cadastroPartidos.api.entites.enums.Sexo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
-public class Associado implements Serializable{
-	private static final long serialVersionUID = 1L;
+public class Associado {
 	
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	
+	 @Id
+	 @GeneratedValue(strategy=GenerationType.IDENTITY)
 	 private Long id;	
 	
 	 private String nome;
-	 
-	 private String cargoPolitico;
+	 	 
+	 private CargoPolitico cargoPolitico;
 	 
 	 @JsonFormat(pattern = "dd/MM/yyyy")
 	 private LocalDate dataDeNascimento;
 	 
-	 private String sexo;
-	 
-	 private Partido partido;
-	 
-	 public Associado () {}
-	 
-	public Associado(Long id, String nome, String cargoPolitico, LocalDate dataDeNascimento, String sexo) {
-		super();
-		this.id = id;
-		this.nome = nome;
-		this.cargoPolitico = cargoPolitico;
-		this.dataDeNascimento = dataDeNascimento;
-		this.sexo = sexo;
-	}
+	 private Sexo sexo;
 
 	public Long getId() {
 		return id;
@@ -59,11 +45,11 @@ public class Associado implements Serializable{
 		this.nome = nome;
 	}
 
-	public String getCargoPolitico() {
+	public CargoPolitico getCargoPolitico() {
 		return cargoPolitico;
 	}
 
-	public void setCargoPolitico(String cargoPolitico) {
+	public void setCargoPolitico(CargoPolitico cargoPolitico) {
 		this.cargoPolitico = cargoPolitico;
 	}
 
@@ -75,37 +61,20 @@ public class Associado implements Serializable{
 		this.dataDeNascimento = dataDeNascimento;
 	}
 
-	public String getSexo() {
+	public Sexo getSexo() {
 		return sexo;
 	}
 
-	public void setSexo(String sexo) {
+	public void setSexo(Sexo sexo) {
 		this.sexo = sexo;
-	} 	
-
-	public Partido getPartido() {
-		return partido;
 	}
-
-	public void setPartido(Partido partido) {
-		this.partido = partido;
+	 
+	public AssociadoComPartidoDto converter(Associado associado, Partido partido) {
+		return new AssociadoComPartidoDto(associado, partido);
 	}
+	 
+	 
+	 
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(cargoPolitico, id);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Associado other = (Associado) obj;
-		return Objects.equals(cargoPolitico, other.cargoPolitico) && Objects.equals(id, other.id);
-	}
 
 }
