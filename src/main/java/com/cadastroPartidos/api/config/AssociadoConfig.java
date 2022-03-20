@@ -1,10 +1,16 @@
 package com.cadastroPartidos.api.config;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
+import com.cadastroPartidos.api.controller.dto.AssociadoComPartidoDto;
+import com.cadastroPartidos.api.entites.Associado;
 import com.cadastroPartidos.api.repositories.AssociadoRepository;
 import com.cadastroPartidos.api.repositories.PartidoRepository;
 
@@ -27,8 +33,13 @@ public class AssociadoConfig  implements CommandLineRunner{
 //		Partido p3 = new Partido(null,"Partido Comunista do Brasil", "PCdoB", "Esquerda", null, null);
 //		Partido p4 = new Partido(null,"Partido Socialista Brasileiro", "psb", "Centro", null, null);
 		
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+			
+		Associado a1 = new Associado(null, "Marielle Franco", "Vereadora", LocalDateTime.parse("25/01/1984 10:40", formatter), "Feminino");
 		
-//		Associado a1 = new Associado(null, "Marielle Franco", "Vereadora", null, "Feminino");
+		associadoRepository.saveAll(Arrays.asList(a1));
+		
+	
 //		Associado a2 = new Associado(null, "Luiz Inácio", "Presidente", null, "Masculino");
 //		Associado a3 = new Associado(null, "Laina Crisostomo", "Deputado Federal", null, "Feminino");
 //		Associado a4 = new Associado(null, "Olivia Santana", "Deputado Federal", null, "Feminino");

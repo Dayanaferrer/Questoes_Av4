@@ -1,6 +1,7 @@
 package com.cadastroPartidos.api.entites;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,6 +29,24 @@ public class Associado {
 	 private LocalDate dataDeNascimento;
 	 
 	 private Sexo sexo;
+
+	 public Associado() {}
+	  
+	
+	public Associado(Long id, String nome, CargoPolitico cargoPolitico, LocalDate dataDeNascimento, Sexo sexo) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.cargoPolitico = cargoPolitico;
+		this.dataDeNascimento = dataDeNascimento;
+		this.sexo = sexo;
+	}
+
+
+	public Associado(Object object, String string, String string2, LocalDateTime parse, String string3) {
+		// TODO Auto-generated constructor stub
+	}
+
 
 	public Long getId() {
 		return id;
