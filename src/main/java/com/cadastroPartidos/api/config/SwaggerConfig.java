@@ -17,7 +17,7 @@ public class SwaggerConfig {
     public Docket cadastroApi() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.cadastro.api"))
+                .apis(RequestHandlerSelectors.basePackage("com.cadastroPartidos.api"))
         		.paths(PathSelectors.ant("/**"))
 				.build();
 	}
