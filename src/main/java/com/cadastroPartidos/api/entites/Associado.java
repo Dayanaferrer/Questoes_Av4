@@ -2,15 +2,14 @@ package com.cadastroPartidos.api.entites;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Transient;
+import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -20,7 +19,7 @@ public class Associado implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	 private Long id;
+	 private Long id;	
 	
 	 private String nome;
 	 
@@ -31,13 +30,9 @@ public class Associado implements Serializable{
 	 
 	 private String sexo;
 	 
-	 @Transient
-	 private Set<Partido> partidos = new HashSet<>();
+	 private Partido partido;
 	 
-	 
-	 public Associado () {
-		 
-	 }
+	 public Associado () {}
 	 
 	public Associado(Long id, String nome, String cargoPolitico, LocalDate dataDeNascimento, String sexo) {
 		super();
@@ -47,7 +42,6 @@ public class Associado implements Serializable{
 		this.dataDeNascimento = dataDeNascimento;
 		this.sexo = sexo;
 	}
-
 
 	public Long getId() {
 		return id;
@@ -87,11 +81,15 @@ public class Associado implements Serializable{
 
 	public void setSexo(String sexo) {
 		this.sexo = sexo;
+	} 	
+
+	public Partido getPartido() {
+		return partido;
 	}
-	public Set<Partido> getPartido(){
-		return partidos;
+
+	public void setPartido(Partido partido) {
+		this.partido = partido;
 	}
-	 
 
 	@Override
 	public int hashCode() {
